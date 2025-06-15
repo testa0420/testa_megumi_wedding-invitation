@@ -141,28 +141,11 @@ a:hover {
   font-size: 1.3rem; /* 少し大きく */
   letter-spacing: 3px;
   transition: color 0.8s ease;
-  overflow: hidden; /* アニメーション用 */
-}
-
-#heroDate .char {
-  display: inline-block;
-  transform: translateY(100%);
+  transform: translateY(100%); /* 初期位置を下げる */
   opacity: 0;
-  animation: slideUp 0.8s forwards;
+  animation: slideUp 0.8s forwards; /* スライドアップアニメーション */
+  animation-delay: 0.5s; /* heroTitleの後に開始 */
 }
-/* heroDateの各文字にもアニメーションディレイを設定 */
-#heroDate .char:nth-child(1) { animation-delay: 0.5s; }
-#heroDate .char:nth-child(2) { animation-delay: 0.55s; }
-#heroDate .char:nth-child(3) { animation-delay: 0.6s; }
-#heroDate .char:nth-child(4) { animation-delay: 0.65s; }
-#heroDate .char:nth-child(5) { animation-delay: 0.7s; } /* . */
-#heroDate .char:nth-child(6) { animation-delay: 0.75s; }
-#heroDate .char:nth-child(7) { animation-delay: 0.8s; }
-#heroDate .char:nth-child(8) { animation-delay: 0.85s; } /* . */
-#heroDate .char:nth-child(9) { animation-delay: 0.9s; }
-#heroDate .char:nth-child(10) { animation-delay: 0.95s; }
-#heroDate .char:nth-child(11) { animation-delay: 1.0s; } /* . */
-#heroDate .char:nth-child(12) { animation-delay: 1.05s; }
 
 
 @keyframes slideUp {
@@ -174,6 +157,36 @@ a:hover {
     transform: translateY(0);
     opacity: 1;
   }
+}
+
+/* 「押」ボタンのスタイル */
+#enterButton {
+  margin-top: 40px; /* 日付との間隔 */
+  padding: 10px 30px;
+  background-color: transparent; /* 透明な背景 */
+  border: 2px solid var(--color-text-primary); /* ボーダー色 */
+  color: var(--color-text-primary); /* 文字色 */
+  font-family: 'Playfair Display', serif; /* フォント */
+  font-size: 1.8rem; /* 大きめのフォント */
+  letter-spacing: 5px; /* 文字間隔 */
+  cursor: pointer;
+  border-radius: 5px; /* 少し角丸 */
+  transition: all 0.3s ease; /* ホバーアニメーション */
+  opacity: 0;
+  animation: fadeIn 1s forwards; /* フェードインアニメーション */
+  animation-delay: 1.2s; /* 日付の後に表示 */
+}
+
+#enterButton:hover {
+  background-color: var(--color-text-primary);
+  color: var(--color-bg-primary);
+  transform: scale(1.05); /* 少し拡大 */
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 
@@ -251,8 +264,8 @@ body.inverted #toggle-invert::before {
   opacity: 0;
   transform: translateY(30px); /* スライド距離を長く */
   transition: opacity 1s ease-out, transform 1s ease-out; /* トランジションを長く */
-  border-top: 1px solid var(--color-accent); /* 上部ボーダーを追加 */
-  border-bottom: 1px solid var(--color-accent); /* 下部ボーダーを追加 */
+  border-top: 1px solid var(--color-accent); /* デフォルトのボーダー */
+  border-bottom: 1px solid var(--color-accent); /* デフォルトのボーダー */
   transition: opacity 1s ease-out, transform 1s ease-out, background-color 0.8s ease-in-out, border-color 0.8s ease-in-out;
 }
 
@@ -266,7 +279,20 @@ body.inverted #toggle-invert::before {
 
 .section.alt-bg {
   background-color: var(--color-bg-secondary); /* 交互の背景色 */
+  border-top: none; /* alt-bg セクションではボーダーを消す */
+  border-bottom: none; /* alt-bg セクションではボーダーを消す */
 }
+
+/* 白黒反転モード時のボーダーを削除 */
+body.inverted .section.alt-bg {
+  border-top: none !important;
+  border-bottom: none !important;
+}
+/* 白黒反転モードでも、alt-bgでないセクションのボーダーは維持 */
+body.inverted .section:not(.alt-bg) {
+  border-color: var(--color-accent); /* 白黒反転時のボーダー色を維持 */
+}
+
 
 .section.is-visible {
   opacity: 1;
@@ -304,7 +330,6 @@ body.inverted #toggle-invert::before {
   line-height: 1.9; /* 行間をさらに広げる */
   max-width: 700px; /* 最大幅を設定し、読みやすく */
   margin: 0 auto; /* 中央揃え */
-  /* text-align: justify; 両端揃えはスマホで不自然なため削除または左寄せに変更 */
   word-break: break-all; /* 長い単語でも強制改行 */
   hyphens: auto; /* ハイフンによる自動改行 */
 }
@@ -469,21 +494,36 @@ body.inverted #toggle-invert::before {
 }
 
 /*===========================================
-  Google Form 埋め込みラッパー
+  Google Form リンクボタン
 ===========================================*/
-.google-form-wrap {
-  width: 100%;
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+.rsvp-link-wrap {
+  text-align: center;
   margin-top: 2.5rem;
-  transform: scale(0.98); /* 初期は少し縮小 */
-  transition: transform 0.5s ease-out, box-shadow 0.5s ease-out;
 }
-.google-form-wrap:hover {
-  transform: scale(1);
-  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.4);
+
+.styled-button {
+  display: inline-block;
+  padding: 18px 45px; /* ボタンを大きく */
+  background-color: var(--color-button-bg);
+  color: var(--color-button-text);
+  border: none;
+  border-radius: 35px; /* さらに角丸に */
+  font-size: 1.3rem; /* フォントを大きく */
+  font-weight: 600;
+  letter-spacing: 1.5px; /* 文字間隔を広げる */
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2); /* 影を強調 */
 }
+
+.styled-button:hover {
+  transform: translateY(-5px); /* ホバーでさらに浮き上がる */
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+  background-color: var(--color-button-text); /* ホバーで背景と文字色を反転 */
+  color: var(--color-button-bg);
+}
+
 
 /*===========================================
   BACK TO TOP
@@ -533,6 +573,12 @@ body.inverted #backToTopBtn:hover {
     margin-top: 1rem;
   }
 
+  #enterButton {
+    margin-top: 30px;
+    font-size: 1.5rem;
+    padding: 8px 25px;
+  }
+
   #contentMain {
     padding: 40px 15px;
   }
@@ -548,7 +594,7 @@ body.inverted #backToTopBtn:hover {
   }
 
   #secGreeting .sectionText {
-    font-size: 0.88rem; /* スマートフォンでのフォントサイズを0.88remに微調整 */
+    font-size: 0.88rem; /* スマートフォンでのフォントサイズを0.88remに維持 */
     line-height: 1.7;
     text-align: left; /* スマホでも左寄せを維持 */
   }
@@ -627,6 +673,11 @@ body.inverted #backToTopBtn:hover {
   #backToTopBtn {
     padding: 12px 30px;
     font-size: 1rem;
+  }
+
+  .styled-button {
+    padding: 15px 35px; /* スマホでのボタンサイズを調整 */
+    font-size: 1.1rem;
   }
 }
 

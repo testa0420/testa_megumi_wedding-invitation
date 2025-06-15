@@ -2,27 +2,20 @@ document.addEventListener('DOMContentLoaded', () => {
   const hero = document.getElementById('hero');
   const heroTitle = document.getElementById('heroTitle');
   const heroDate = document.getElementById('heroDate');
-  // const scrollHint = document.getElementById('scrollHint'); // 削除
+  const enterButton = document.getElementById('enterButton'); // 「押」ボタン要素
   const contentScreen = document.getElementById('contentScreen');
   const toggleInvert = document.getElementById('toggle-invert');
   const backToTopBtn = document.getElementById('backToTopBtn');
   const sections = document.querySelectorAll('.section'); // 全てのコンテンツセクションを取得
 
-  // ヒーロータイトルと日付の文字を分割してアニメーション用にspanで囲む
+  // ヒーロータイトルは引き続き各文字をspanで囲む
   heroTitle.innerHTML = heroTitle.textContent.split('').map(char => `<span class="char">${char === ' ' ? ' ' : char}</span>`).join('');
-  heroDate.innerHTML = heroDate.textContent.split('').map(char => `<span class="char">${char === ' ' ? ' ' : char}</span>`).join('');
+  // heroDateは単一要素として扱うため、span.charで囲む処理は引き続き不要
 
 
-  // ヒーロークリック時にフェードアウト → コンテンツ表示 → 色反転ボタンを表示
+  // ヒーローセクション全体をクリック可能にする
   hero.addEventListener('click', () => {
-    // ヒーロー要素にクリックされたことを示すクラスを追加
-    // これによりCSSのtransitionが発火し、ヒーローが非表示になるアニメーションが始まる
-    hero.classList.add('clicked');
-
-    // スクロールヒントを非表示にする処理は不要になったため削除
-    // if (scrollHint) { //念のためチェック
-    //   scrollHint.style.opacity = '0';
-    // }
+    hero.classList.add('clicked'); // ヒーロー要素にクリックされたことを示すクラスを追加
 
     // ヒーローのトランジションが完了するのを待つ (CSSのtransition durationに合わせる)
     setTimeout(() => {
