@@ -79,8 +79,8 @@ a:hover {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  text-align: center;
-  cursor: pointer;
+  /* text-align: center; */ /* heroContentにflexboxを適用するため不要 */
+  cursor: pointer; /* hero全体をクリック可能にする */
   overflow: hidden;
   transition: background-size 1.5s ease-out, filter 1.5s ease-out, opacity 0.8s ease-out; /* アニメーション追加 */
 }
@@ -113,6 +113,12 @@ a:hover {
   padding: 0 20px;
   opacity: 1;
   transition: opacity 0.8s ease-out;
+  display: flex; /* Flexboxを適用 */
+  flex-direction: column; /* 要素を縦に並べる */
+  justify-content: center; /* 垂直方向の中央揃え */
+  align-items: center; /* 水平方向の中央揃え */
+  width: 100%; /* 親要素の幅いっぱいに広げる */
+  /* text-align: center; */ /* align-items: center; で子要素が中央揃えになるため不要 */
 }
 
 #heroTitle {
@@ -161,16 +167,21 @@ a:hover {
 
 /* 「押」ボタンのスタイル */
 #enterButton {
-  margin-top: 40px; /* 日付との間隔 */
-  padding: 10px 30px;
+  margin-top: 20px; /* 日付との間隔をさらに調整 */
+  width: 40px; /* さらに小さく */
+  height: 40px; /* さらに小さく */
+  padding: 0; /* パディングをリセット */
   background-color: transparent; /* 透明な背景 */
   border: 2px solid var(--color-text-primary); /* ボーダー色 */
   color: var(--color-text-primary); /* 文字色 */
   font-family: 'Playfair Display', serif; /* フォント */
-  font-size: 1.8rem; /* 大きめのフォント */
-  letter-spacing: 5px; /* 文字間隔 */
+  font-size: 0.9rem; /* フォントサイズを調整 */
+  letter-spacing: 1px; /* 文字間隔を調整 */
   cursor: pointer;
-  border-radius: 5px; /* 少し角丸 */
+  border-radius: 50%; /* 真円にする */
+  display: flex; /* Flexboxで文字を中央揃え */
+  justify-content: center;
+  align-items: center;
   transition: all 0.3s ease; /* ホバーアニメーション */
   opacity: 0;
   animation: fadeIn 1s forwards; /* フェードインアニメーション */
@@ -180,8 +191,8 @@ a:hover {
 #enterButton:hover {
   background-color: var(--color-text-primary);
   color: var(--color-bg-primary);
-  transform: scale(1.05); /* 少し拡大 */
-  box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+  transform: scale(1.1); /* 少し拡大 */
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.4); /* ホバー時の影を強調 */
 }
 
 @keyframes fadeIn {
@@ -574,9 +585,11 @@ body.inverted #backToTopBtn:hover {
   }
 
   #enterButton {
-    margin-top: 30px;
-    font-size: 1.5rem;
-    padding: 8px 25px;
+    margin-top: 25px; /* スマホでボタンのフォントサイズを調整 */
+    width: 40px; /* スマホでボタンのサイズをさらに小さく */
+    height: 40px;
+    font-size: 1rem; /* スマホでフォントサイズを調整 */
+    letter-spacing: 1px;
   }
 
   #contentMain {
@@ -594,7 +607,7 @@ body.inverted #backToTopBtn:hover {
   }
 
   #secGreeting .sectionText {
-    font-size: 0.88rem; /* スマートフォンでのフォントサイズを0.88remに維持 */
+    font-size: 0.8rem; /* スマートフォンでのフォントサイズを0.8remに維持 */
     line-height: 1.7;
     text-align: left; /* スマホでも左寄せを維持 */
   }
