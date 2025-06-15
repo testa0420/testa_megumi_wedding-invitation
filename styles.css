@@ -1,0 +1,637 @@
+/*===========================================
+  Google Fonts 読み込み
+===========================================*/
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&display=swap'); /* Bold追加 */
+
+/*===========================================
+  カラーモード変数定義
+===========================================*/
+:root {
+  --color-bg-primary: #0a0a0a; /* より深い黒 */
+  --color-bg-secondary: #000000; /* alt-bg を純粋な黒に調整 */
+  --color-text-primary: #f0f0f0;
+  --color-text-secondary: #aaaaaa;
+  --color-accent: #cccccc; /* アクセントカラーを明るく */
+  --color-overlay: rgba(0, 0, 0, 0.7); /* オーバーレイをさらに濃く */
+  --color-button-bg: #f0f0f0;
+  --color-button-text: #111111;
+
+  /* ヒーロー画像は常にカラー */
+  --hero-grayscale: 0;
+}
+
+body.inverted {
+  --color-bg-primary: #ffffff;
+  --color-bg-secondary: #f0f0f0; /* 反転モードのalt-bg */
+  --color-text-primary: #111111;
+  --color-text-secondary: #555555;
+  --color-accent: #333333;
+  --color-overlay: rgba(255, 255, 255, 0.7);
+  --color-button-bg: #111111;
+  --color-button-text: #f0f0f0;
+
+  /* ヒーロー画像は常にカラー */
+  --hero-grayscale: 0;
+}
+
+/*===========================================
+  リセット＆ベーススタイル
+===========================================*/
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--color-bg-primary);
+  color: var(--color-text-primary);
+  font-family: 'Noto Serif JP', serif;
+  line-height: 1.7;
+  overflow-x: hidden;
+  transition: background-color 0.8s ease-in-out, color 0.8s ease-in-out; /* トランジションを長く、滑らかに */
+}
+
+a {
+  color: var(--color-accent);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+a:hover {
+  color: var(--color-text-primary);
+  text-decoration: underline;
+}
+
+/*===========================================
+  ヒーローセクション
+===========================================*/
+#hero {
+  position: relative;
+  height: 100vh;
+  background: url('3D人形.png') no-repeat center center;
+  background-size: cover; /* 初期状態はcover */
+  filter: grayscale(var(--hero-grayscale)); /* グレースケールフィルター（常に0なのでカラー） */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  cursor: pointer;
+  overflow: hidden;
+  transition: background-size 1.5s ease-out, filter 1.5s ease-out, opacity 0.8s ease-out; /* アニメーション追加 */
+}
+
+/* スマホ最適化: 縦長画像を画面いっぱいに */
+@media (max-aspect-ratio: 1/1) { /* 縦長画面の場合 */
+  #hero {
+    background-size: cover; /* 縦横比を保ちつつ画面いっぱいに */
+    background-position: center center; /* 中央を基準に表示 */
+  }
+}
+
+#hero.clicked {
+  opacity: 0;
+  pointer-events: none; /* クリック後、ヒーローセクションのイベントを無効化 */
+}
+
+#hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-color: var(--color-overlay);
+  transition: background-color 0.8s ease;
+  z-index: 1;
+}
+
+#heroContent {
+  position: relative;
+  z-index: 2;
+  padding: 0 20px;
+  opacity: 1;
+  transition: opacity 0.8s ease-out;
+}
+
+#heroTitle {
+  margin: 0;
+  font-family: 'Playfair Display', serif;
+  font-size: 4.8rem; /* さらに大きく */
+  letter-spacing: 8px; /* 文字間隔を広げ、モード感を強調 */
+  color: var(--color-text-primary);
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.4); /* 影を強調 */
+  overflow: hidden; /* アニメーション用 */
+}
+
+#heroTitle .char {
+  display: inline-block;
+  transform: translateY(100%); /* 初期位置を下げる */
+  opacity: 0;
+  animation: slideUp 0.8s forwards; /* スライドアップアニメーション */
+}
+#heroTitle .char:nth-child(1) { animation-delay: 0.1s; }
+#heroTitle .char:nth-child(2) { animation-delay: 0.2s; }
+/* 必要に応じて文字数分追加 */
+
+#heroDate {
+  margin: 1.5rem 0 0;
+  color: var(--color-text-secondary);
+  font-size: 1.3rem; /* 少し大きく */
+  letter-spacing: 3px;
+  transition: color 0.8s ease;
+  overflow: hidden; /* アニメーション用 */
+}
+
+#heroDate .char {
+  display: inline-block;
+  transform: translateY(100%);
+  opacity: 0;
+  animation: slideUp 0.8s forwards;
+}
+/* heroDateの各文字にもアニメーションディレイを設定 */
+#heroDate .char:nth-child(1) { animation-delay: 0.5s; }
+#heroDate .char:nth-child(2) { animation-delay: 0.55s; }
+#heroDate .char:nth-child(3) { animation-delay: 0.6s; }
+#heroDate .char:nth-child(4) { animation-delay: 0.65s; }
+#heroDate .char:nth-child(5) { animation-delay: 0.7s; } /* . */
+#heroDate .char:nth-child(6) { animation-delay: 0.75s; }
+#heroDate .char:nth-child(7) { animation-delay: 0.8s; }
+#heroDate .char:nth-child(8) { animation-delay: 0.85s; } /* . */
+#heroDate .char:nth-child(9) { animation-delay: 0.9s; }
+#heroDate .char:nth-child(10) { animation-delay: 0.95s; }
+#heroDate .char:nth-child(11) { animation-delay: 1.0s; } /* . */
+#heroDate .char:nth-child(12) { animation-delay: 1.05s; }
+
+
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+
+/*===========================================
+  コンテンツ全体
+===========================================*/
+#contentScreen {
+  display: none;
+  opacity: 0;
+  background-color: var(--color-bg-primary);
+  min-height: 100vh;
+  position: relative;
+  transition: opacity 0.8s ease-out;
+}
+
+#toggle-invert {
+  position: fixed;
+  top: 25px; /* 上からの位置を調整 */
+  right: 25px; /* 右からの位置を調整 */
+  width: 45px; /* さらに大きく */
+  height: 45px; /* さらに大きく */
+  background: transparent;
+  border: 2px solid var(--color-text-primary);
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 100; /* 最前面に */
+  transition: border-color 0.6s ease, background-color 0.6s ease, transform 0.2s ease;
+  display: none;
+  outline: none;
+}
+
+#toggle-invert::before {
+  content: '';
+  display: block;
+  width: 18px; /* 中央の点を大きく */
+  height: 18px;
+  border-radius: 50%;
+  background-color: var(--color-text-primary);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: background-color 0.6s ease;
+}
+
+#toggle-invert:hover {
+  transform: scale(1.1); /* ホバーで少し拡大 */
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.3); /* ホバーで光る影 */
+}
+body.inverted #toggle-invert:hover {
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+}
+
+
+body.inverted #toggle-invert {
+  border-color: var(--color-button-text);
+  background-color: var(--color-button-bg);
+}
+
+body.inverted #toggle-invert::before {
+  background-color: var(--color-button-text);
+}
+
+
+#contentMain {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 80px 30px;
+}
+
+/* セクション共通 */
+.section {
+  margin-bottom: 5rem;
+  padding: 40px 0; /* セクション内部パディングを追加 */
+  opacity: 0;
+  transform: translateY(30px); /* スライド距離を長く */
+  transition: opacity 1s ease-out, transform 1s ease-out; /* トランジションを長く */
+  border-top: 1px solid var(--color-accent); /* 上部ボーダーを追加 */
+  border-bottom: 1px solid var(--color-accent); /* 下部ボーダーを追加 */
+  transition: opacity 1s ease-out, transform 1s ease-out, background-color 0.8s ease-in-out, border-color 0.8s ease-in-out;
+}
+
+.section:first-of-type {
+  border-top: none; /* 最初のセクションは上ボーダーなし */
+}
+
+.section:last-of-type {
+  border-bottom: none; /* 最後のセクションは下ボーダーなし */
+}
+
+.section.alt-bg {
+  background-color: var(--color-bg-secondary); /* 交互の背景色 */
+}
+
+.section.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.sectionTitle {
+  font-family: 'Playfair Display', serif;
+  font-size: 3rem; /* さらに大きく */
+  margin-bottom: 2.5rem; /* タイトル下余白を増やす */
+  border-bottom: none; /* 下線をなくし、よりモダンに */
+  position: relative;
+  display: inline-block; /* 中央揃えのため */
+  padding-bottom: 0.5rem;
+  letter-spacing: 2px;
+  color: var(--color-text-primary);
+}
+/* セクションタイトルの下部に短い線を引く */
+.sectionTitle::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 0;
+  width: 60px; /* 短い線の幅 */
+  height: 2px;
+  background-color: var(--color-accent);
+  transition: background-color 0.8s ease-in-out;
+}
+
+
+.sectionText {
+  font-size: 0.95rem; /* デスクトップでのフォントサイズ */
+  color: var(--color-text-secondary);
+  line-height: 1.9; /* 行間をさらに広げる */
+  max-width: 700px; /* 最大幅を設定し、読みやすく */
+  margin: 0 auto; /* 中央揃え */
+  /* text-align: justify; 両端揃えはスマホで不自然なため削除または左寄せに変更 */
+  word-break: break-all; /* 長い単語でも強制改行 */
+  hyphens: auto; /* ハイフンによる自動改行 */
+}
+
+#secGreeting .sectionText {
+  font-style: italic; /* 挨拶文を斜体に */
+  font-weight: 300;
+  line-height: 2.2; /* さらに行間を広げる */
+  text-align: left; /* 言辞の文章を左寄せに */
+}
+
+/* ギャラリーセクションのコメント */
+.galleryComment {
+  font-size: 1.1rem; /* コメントのフォントサイズ */
+  text-align: left; /* 左寄せに設定 */
+  margin-left: auto; /* max-widthと合わせて中央寄せにも対応 */
+  margin-right: auto;
+  margin-bottom: 2rem; /* ギャラリーとの間隔 */
+  color: var(--color-text-primary); /* 主要なテキストカラーに */
+}
+
+
+/*===========================================
+  宴地グリッド
+===========================================*/
+.detailsGrid {
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+  gap: 1.5rem; /* 余白を調整 */
+  margin: 2rem auto; /* 中央揃え */
+  max-width: 700px; /* 最大幅 */
+}
+
+.label {
+  font-weight: 700; /* Bold */
+  color: var(--color-text-primary);
+  font-size: 1.05rem;
+  text-align: right; /* ラベルを右寄せ */
+}
+
+.value {
+  color: var(--color-text-secondary);
+  word-break: break-all;
+}
+
+/*===========================================
+  地図ラッパー
+===========================================*/
+.mapWrap {
+  margin-top: 3rem; /* 上部余白を増やす */
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3); /* 影を強調 */
+  transform: scale(0.98); /* 初期は少し縮小 */
+  transition: transform 0.5s ease-out, box-shadow 0.5s ease-out;
+}
+.mapWrap:hover {
+  transform: scale(1); /* ホバーで拡大 */
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.4);
+}
+
+.mapWrap iframe {
+  width: 100%;
+  height: 400px; /* 地図の高さをさらに大きく */
+  border: none;
+}
+
+/*===========================================
+  主宰セクション
+===========================================*/
+.hostContainer {
+  display: flex; /* Flexboxで横並び */
+  justify-content: center; /* 中央揃え */
+  gap: 3rem; /* ホストカード間の横方向のギャップ */
+  flex-wrap: wrap; /* 必要に応じて折り返し */
+  margin-top: 2.5rem;
+}
+
+.hostCard {
+  display: flex;
+  flex-direction: column; /* 写真と名前を縦並びにする */
+  align-items: center; /* 中央揃え */
+}
+
+.hostIcon {
+  position: relative;
+  width: 200px; /* サイズを大きく */
+  height: 200px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 4px solid var(--color-accent); /* ボーダーを太く */
+  transition: border-color 0.8s ease, transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25);
+  margin-bottom: 0.8rem; /* 名前との間隔を調整 */
+}
+
+.hostIcon:hover {
+  transform: translateY(-5px); /* ホバーで少し浮き上がる */
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
+}
+
+.hostIcon img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.hostIcon:hover img {
+  transform: scale(1.1); /* ホバーで画像を少し拡大 */
+}
+
+.hostOverlay {
+  position: absolute;
+  inset: 0;
+  background-color: var(--color-overlay);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-primary);
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem; /* オーバーレイテキストを大きく */
+  font-weight: 700;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.hostIcon:hover .hostOverlay {
+  opacity: 1;
+}
+
+.hostName {
+  font-size: 1.15rem; /* 名前を少し大きく */
+  color: var(--color-text-secondary);
+  text-align: center;
+  margin-top: 0; /* hostIconのmargin-bottomがあるのでここは0 */
+  letter-spacing: 1px;
+}
+
+/*===========================================
+  ギャラリーセクション
+===========================================*/
+.galleryContainer {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* レスポンシブグリッドを少し大きく */
+  gap: 25px; /* 余白を増やす */
+  margin-top: 2.5rem;
+}
+
+.galleryImage {
+  width: 100%;
+  height: 220px; /* 高さを少し大きく */
+  object-fit: cover;
+  /* border-radius: 10px; */ /* 角を丸くする設定を削除 */
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.galleryImage:hover {
+  transform: scale(1.04);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.35);
+}
+
+/*===========================================
+  Google Form 埋め込みラッパー
+===========================================*/
+.google-form-wrap {
+  width: 100%;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+  margin-top: 2.5rem;
+  transform: scale(0.98); /* 初期は少し縮小 */
+  transition: transform 0.5s ease-out, box-shadow 0.5s ease-out;
+}
+.google-form-wrap:hover {
+  transform: scale(1);
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.4);
+}
+
+/*===========================================
+  BACK TO TOP
+===========================================*/
+#contentFooter {
+  text-align: center;
+  padding-bottom: 80px; /* 下部パディングを増やす */
+  margin-top: 60px; /* 上部余白を増やす */
+}
+
+#backToTopBtn {
+  border: 2px solid var(--color-text-primary);
+  padding: 15px 35px; /* ボタンを大きく */
+  background-color: transparent;
+  color: var(--color-text-primary);
+  border-radius: 30px; /* 角をさらに丸く */
+  cursor: pointer;
+  font-size: 1.1rem;
+  letter-spacing: 2px;
+  transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease, border-color 0.3s ease;
+  outline: none;
+  font-family: 'Playfair Display', serif; /* フォントをPlayfair Displayに */
+}
+
+#backToTopBtn:hover {
+  background-color: var(--color-button-bg);
+  color: var(--color-button-text);
+  transform: translateY(-5px); /* ホバーでさらに浮き上がる */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+body.inverted #backToTopBtn:hover {
+  box-shadow: 0 8px 20px rgba(255, 255, 255, 0.2);
+}
+
+
+/*===========================================
+  レスポンシブ調整（スマホ用）
+===========================================*/
+@media (max-width: 768px) {
+  #heroTitle {
+    font-size: 3.5rem;
+    letter-spacing: 5px;
+  }
+
+  #heroDate {
+    font-size: 1.1rem;
+    margin-top: 1rem;
+  }
+
+  #contentMain {
+    padding: 40px 15px;
+  }
+
+  .section {
+    margin-bottom: 2.5rem;
+    padding: 30px 0;
+  }
+
+  .sectionTitle {
+    font-size: 2.2rem;
+    margin-bottom: 2rem;
+  }
+
+  #secGreeting .sectionText {
+    font-size: 0.88rem; /* スマートフォンでのフォントサイズを0.88remに微調整 */
+    line-height: 1.7;
+    text-align: left; /* スマホでも左寄せを維持 */
+  }
+
+  .galleryComment {
+    font-size: 0.95rem; /* スマホでのコメントサイズを微調整 */
+    text-align: left; /* スマホでも左寄せを維持 */
+  }
+
+  .detailsGrid {
+    grid-template-columns: 1fr;
+    gap: 0.8rem;
+    margin: 1.5rem auto;
+  }
+  .label {
+    text-align: left; /* スマホでは左寄せ */
+  }
+
+  .mapWrap iframe {
+    height: 300px;
+  }
+
+  .hostContainer {
+    flex-direction: row; /* スマホでも横並びを維持 */
+    gap: 1.5rem; /* スマホでのカード間のギャップ */
+    flex-wrap: wrap; /* 必要に応じて折り返し */
+  }
+
+  .hostCard {
+    /* 写真と名前は縦並びを維持 */
+    flex-direction: column;
+    align-items: center;
+    /* hostContainerでギャップを制御するため、個々のカードの下マージンは0 */
+    margin-bottom: 0;
+  }
+
+  .hostIcon {
+    width: 150px;
+    height: 150px;
+    border-width: 3px;
+    margin-bottom: 0.5rem; /* 名前との間隔を調整 */
+  }
+
+  .hostOverlay {
+    font-size: 1.6rem;
+  }
+
+  .hostName {
+    font-size: 1rem;
+    margin-bottom: 0; /* hostCard内の縦並びなので個別のマージンは不要 */
+  }
+
+
+  .galleryContainer {
+    grid-template-columns: 1fr;
+    gap: 15px;
+    margin-top: 2rem;
+  }
+
+  .galleryImage {
+    height: 200px;
+  }
+
+  #toggle-invert {
+    width: 40px;
+    height: 40px;
+    top: 15px;
+    right: 15px;
+  }
+
+  #toggle-invert::before {
+    width: 16px;
+    height: 16px;
+  }
+
+  #backToTopBtn {
+    padding: 12px 30px;
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  #heroTitle {
+    font-size: 2.8rem;
+  }
+}

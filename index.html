@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>祝祭 - Wedding Invitation</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+</head>
+<body>
+  <section id="hero">
+    <div id="heroContent">
+      <h1 id="heroTitle">
+        <span class="char">祝</span><span class="char">祭</span>
+      </h1>
+      <p id="heroDate">
+        <span class="char">2</span><span class="char">0</span><span class="char">2</span><span class="char">5</span><span class="char">.</span><span class="char">0</span><span class="char">7</span><span class="char">.</span><span class="char">2</span><span class="char">6</span><span class="char">.</span><span class="char">土</span>
+      </p>
+      </div>
+  </section>
+
+  <section id="contentScreen">
+    <button id="toggle-invert" aria-label="色反転" title="Toggle Color Mode"></button>
+
+    <main id="contentMain">
+      <section class="section" id="secGreeting">
+        <h2 class="sectionTitle">言辞</h2>
+        <p class="sectionText">
+          謹啓<br>
+          <br>
+          時下、益々ご清祥のこととお慶び申し上げます。<br>
+          この度、我らは結婚の儀を執り行う運びとなり、<br>
+          これに際し、長きに渡り賜った皆々様の御恩に感謝を込め、<br>
+          ささやかながら「祝祭」を催す次第でございます。<br>
+          同じ志を抱く仲間として、ぜひこの瞬間をご一緒ください。<br>
+          <br>
+          謹白
+        </p>
+      </section>
+
+      <section class="section alt-bg" id="secBanquet">
+        <h2 class="sectionTitle">宴地</h2>
+        <div class="detailsGrid">
+          <div class="label">会場</div>
+          <div class="value">国際文化会館</div>
+
+          <div class="label">住所</div>
+          <div class="value">東京都港区六本木5-11-16</div>
+
+          <div class="label">電話番号</div>
+          <div class="value">03-3470-4611</div>
+
+          <div class="label">URL</div>
+          <div class="value">
+            <a href="https://ihj.global/access/" target="_blank" rel="noopener">https://ihj.global/access/</a>
+          </div>
+
+          <div class="label">時間</div>
+          <div class="value">15:30受付開始／16:00開宴／19:00おひらき</div>
+        </div>
+        <div class="mapWrap">
+          <iframe
+            title="国際文化会館 地図"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3241.7504398476685!2d139.73087077590037!3d35.65851977259457!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x60188b9e6d836c33%3A0x82a80c325a24cfd2!2z5Zu96Zqb5paH5YyW5Lya6aSo!5e0!3m2!1sja!2sjp!4v1749995803441!5m2!1sja!2sjp"
+            width="100%"
+            height="450"
+            style="border:0;"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+          ></iframe>
+        </div>
+      </section>
+
+      <section class="section" id="secHost">
+        <h2 class="sectionTitle">主宰</h2>
+        <div class="hostContainer">
+          <div class="hostCard">
+            <div class="hostIcon">
+              <img src="groom_2.jpg" alt="新郎の写真" />
+              <div class="hostOverlay">新郎</div>
+            </div>
+            <p class="hostName">菊地 テスタ</p>
+          </div>
+          <div class="hostCard">
+            <div class="hostIcon">
+              <img src="bride_2.jpg" alt="新婦の写真" />
+              <div class="hostOverlay">新婦</div>
+            </div>
+            <p class="hostName">宮嶋 恵</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section alt-bg" id="secGallery">
+        <h2 class="sectionTitle">思い出</h2>
+        <p class="sectionText galleryComment">新婚旅行に行ってきました！<br>@エジプト/サンセバスチャン/マドリード</p>
+        <div class="galleryContainer">
+          <img src="photo1.jpg" alt="思い出の写真 1" class="galleryImage">
+          <img src="photo2.jpg" alt="思い出の写真 2" class="galleryImage">
+          <img src="photo3.jpg" alt="思い出の写真 3" class="galleryImage">
+          <img src="photo4.jpg" alt="思い出の写真 4" class="galleryImage">
+          </div>
+      </section>
+
+      <section class="section" id="secRSVP">
+        <h2 class="sectionTitle">出欠席</h2>
+        <p class="sectionText">お手数ですが、下記フォームよりご回答をお願いいたします。</p>
+        <div class="google-form-wrap">
+          <iframe
+            src="https://docs.google.com/forms/d/e/1FAIpQLSdWoX9f1J_kKMMvZCC9uXzMIoOgpI_zRe5X8acGls1pAlJteQ/viewform?usp=dialog"
+            width="100%"
+            height="1000"
+            frameborder="0"
+            marginheight="0"
+            marginwidth="0"
+          >
+            読み込んでいます…
+          </iframe>
+        </div>
+      </section>
+    </main>
+
+    <footer id="contentFooter">
+      <button id="backToTopBtn" aria-label="トップへ戻る">BACK TO TOP</button>
+    </footer>
+  </section>
+
+  <script src="script.js"></script>
+</body>
+</html>
